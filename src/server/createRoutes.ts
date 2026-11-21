@@ -1,20 +1,17 @@
 import express, { Router } from "express";
-import { Server } from "http";
 import { InitGetRoutes } from "./utils/createGetRoutes";
+import { InitPostRoutes } from "./utils/createPostRoutes";
 import { Helper } from "./utils/helper";
-const router: Router = express.Router();
 
 export const JSONServeRoutes = () => {
-  const server = Helper.getServer;
+  const router: Router = express.Router();
   // GET Routes Initialized
-  console.log("hello");
   router.get("/", (req, res) => {
-    console.log(Helper.getURLS());
-
     res.render("view", { data: Helper.getURLS() });
   });
 
   router.use("/api/", InitGetRoutes());
+  router.use("/", InitPostRoutes());
 
   return router;
 };

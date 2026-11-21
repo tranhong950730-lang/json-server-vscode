@@ -20,6 +20,7 @@ export const startServer = function () {
 
     app.set("views", path.join(__dirname, "views"));
     app.use(express.static(__dirname + "/public"));
+    app.use(express.json());
 
     // Initailise Routes ROUTES
 
@@ -30,9 +31,10 @@ export const startServer = function () {
         const serverAddress = server.address() as AddressInfo;
         PORT = serverAddress.port;
         console.log(`Example app listening on port ${PORT}`);
+        resolve(PORT);
       });
+      server.on("error", reject);
       Helper.setServer(server);
-      resolve((server.address() as AddressInfo).port);
     });
   } catch (error) {
     console.error(error);

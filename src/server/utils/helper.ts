@@ -38,12 +38,17 @@ export class Helper {
   public static getURLS() {
     const get = this.getURLKeys.map((key) => {
       const serverAddress = Helper.getServer.address() as AddressInfo;
-      const encodedKey = encodeURIComponent(key);
-      return `http://127.0.0.1:${serverAddress.port}/api/${encodedKey}`;
+      const routePath = key.replace(/^\/+|\/+$/g, "");
+      return `http://127.0.0.1:${serverAddress.port}/api/${routePath}`;
+    });
+    const post = this.getURLKeys.map((key) => {
+      const serverAddress = Helper.getServer.address() as AddressInfo;
+      const routePath = key.replace(/^\/+|\/+$/g, "");
+      return `http://127.0.0.1:${serverAddress.port}/${routePath}`;
     });
     return {
       get,
-      post: [],
+      post,
       put: [],
       patch: [],
       delete: [],
